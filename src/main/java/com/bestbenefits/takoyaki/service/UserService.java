@@ -2,9 +2,11 @@ package com.bestbenefits.takoyaki.service;
 
 import com.bestbenefits.takoyaki.DTO.client.request.UserAdditionalInfoReqDTO;
 import com.bestbenefits.takoyaki.DTO.client.request.UserNicknameUpdateReqDTO;
+import com.bestbenefits.takoyaki.DTO.client.response.UserInfoResDTO;
 import com.bestbenefits.takoyaki.DTO.layer.request.OAuthSignUpReqDTO;
 import com.bestbenefits.takoyaki.DTO.layer.response.OAuthAuthResDTO;
 import com.bestbenefits.takoyaki.DTO.client.request.UserDuplicateNicknameReqDTO;
+import com.bestbenefits.takoyaki.config.properties.oauth.OAuthSocialType;
 import com.bestbenefits.takoyaki.entity.User;
 import com.bestbenefits.takoyaki.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +62,17 @@ public class UserService {
         String newNickname = userNicknameUpdateReqDTO.getNickname();
 
         user.updateNickname(newNickname);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoResDTO getUserInfo(Long id){
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("User not found"));
+        return UserInfoResDTO.builder()
+                .nickname(user.getNickname())
+                .social(OAuthSocialType.fromValue(user.getSocial()).name().toLowerCase())
+                .email(user.getEmail())
+                .build();
     }
 
 }

@@ -1,7 +1,7 @@
 package com.bestbenefits.takoyaki.util.webclient.oauth;
 
 import com.bestbenefits.takoyaki.DTO.server.response.TokensResDTO;
-import com.bestbenefits.takoyaki.DTO.server.response.UserInfoResDTO;
+import com.bestbenefits.takoyaki.DTO.server.response.SocialUserInfoResDTO;
 import com.bestbenefits.takoyaki.config.properties.oauth.OAuthKakaoConst;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -63,7 +63,7 @@ public class OAuthKakaoWebClient implements OAuthWebClient{
                 .block();
     }
 
-    public UserInfoResDTO requestUserInfo(String accessToken) {
+    public SocialUserInfoResDTO requestUserInfo(String accessToken) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(OAuthKakaoConst.URL2)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
@@ -76,7 +76,7 @@ public class OAuthKakaoWebClient implements OAuthWebClient{
         return webClient.post()
                 .uri(uri)
                 .retrieve()
-                .bodyToMono(UserInfoResDTO.class)
+                .bodyToMono(SocialUserInfoResDTO.class)
                 .block();
     }
 

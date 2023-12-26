@@ -6,7 +6,7 @@ import com.bestbenefits.takoyaki.DTO.layer.request.OAuthSignUpReqDTO;
 import com.bestbenefits.takoyaki.DTO.layer.response.OAuthAuthResDTO;
 import com.bestbenefits.takoyaki.DTO.client.request.UserDuplicateNicknameReqDTO;
 import com.bestbenefits.takoyaki.DTO.server.response.TokensResDTO;
-import com.bestbenefits.takoyaki.DTO.server.response.UserInfoResDTO;
+import com.bestbenefits.takoyaki.DTO.server.response.SocialUserInfoResDTO;
 import com.bestbenefits.takoyaki.config.annotation.Session;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiMessage;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ import java.util.Map;
 
 
 @RestController
-@Validated
+//@Validated
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
@@ -72,17 +71,17 @@ public class UserController {
         //request tokens to resource server by Authorization code
         TokensResDTO tokensResDTO = oAuthSocialWebClient.requestTokens(code);
         //request user's info to resource server by access token
-        UserInfoResDTO userInfoResDTO = oAuthSocialWebClient.requestUserInfo(tokensResDTO.getAccessToken());
+        SocialUserInfoResDTO socialUserInfoResDTO = oAuthSocialWebClient.requestUserInfo(tokensResDTO.getAccessToken());
         //check whether this user exists in DataBase by using email & social type
-        OAuthAuthResDTO oAuthAuthResDTO = userService.loginByOAuth(userInfoResDTO.getEmail(), oAuthSocialType.ordinal());
+        OAuthAuthResDTO oAuthAuthResDTO = userService.loginByOAuth(socialUserInfoResDTO.getEmail(), oAuthSocialType.ordinal());
 
         if (oAuthAuthResDTO != null) { //등록된 유저고,
             if(!oAuthAuthResDTO.isInfoNeeded()) //추가 정보 있으면 로그인 완료
                 session.setAttribute(SessionConst.AUTHENTICATION, true);
         }else //등록되지 않은 유저면 유저 등록
             oAuthAuthResDTO = userService.signUpByOAuth(OAuthSignUpReqDTO.builder()
-                                          .userInfoResDTO(userInfoResDTO)
-                                           .social(oAuthSocialType.ordinal())
+                                          .socialUserInfoResDTO(socialUserInfoResDTO)
+                                           .social(oAuthSocialType.getIndex())
                                             .build());
 
         session.setAttribute(SessionConst.ID, oAuthAuthResDTO.getId());
@@ -115,5 +114,9 @@ public class UserController {
         return ApiResponseCreator.success(new ApiMessage("로그아웃 되었습니다."));
     }
 
+    @GetMapping("/info")
+    public ApiResponse<?> getInfo(@Session(attribute = SessionConst.ID) Long id){
+        return ApiResponseCreator.success(userService.getUserInfo(id));
+    }
 
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Getter
 @RequiredArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserInfoResDTO {
+public class SocialUserInfoResDTO {
     private KakaoAccount kakaoAccount;
 
     @Getter

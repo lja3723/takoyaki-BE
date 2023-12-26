@@ -1,6 +1,6 @@
 package com.bestbenefits.takoyaki.DTO.layer.request;
 
-import com.bestbenefits.takoyaki.DTO.server.response.UserInfoResDTO;
+import com.bestbenefits.takoyaki.DTO.server.response.SocialUserInfoResDTO;
 import com.bestbenefits.takoyaki.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,8 +11,8 @@ public class OAuthSignUpReqDTO {
     private int social;
 
     @Builder
-    public OAuthSignUpReqDTO(UserInfoResDTO userInfoResDTO, int social){
-        this.email = userInfoResDTO.getEmail();
+    public OAuthSignUpReqDTO(SocialUserInfoResDTO socialUserInfoResDTO, int social){
+        this.email = socialUserInfoResDTO.getEmail();
         this.social = social;
     }
     public User toEntity(){
