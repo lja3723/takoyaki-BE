@@ -10,7 +10,4 @@ import lombok.RequiredArgsConstructor;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TokensResDTO {
     private String accessToken;
-//    private String expiresIn;
-//    private String refreshToken;
-//    private String refreshTokenExpiresIn;
 }
