@@ -20,7 +20,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public boolean checkDuplicateNickname(UserDuplicateNicknameReqDTO userDuplicateNicknameReqDTO){
-        return userRepository.findUserByNickname(userDuplicateNicknameReqDTO.getNickname()).orElse(null) != null;
+        return userRepository.findUserByNickname(userDuplicateNicknameReqDTO.getNickname()).isPresent();
     }
 
     @Transactional(readOnly = true)
