@@ -45,12 +45,14 @@ public class UserService {
 
     @Transactional
     public void insertAdditionalInfo(Long id, UserAdditionalInfoReqDTO userAdditionalInfoReqDTO){
+        String nickname = userAdditionalInfoReqDTO.getNickname();
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("User not found"));
         if (user.getNickname() != null)
-            throw new IllegalStateException("User already has additional information");
-
-        user.updateNickname(userAdditionalInfoReqDTO.getNickname());
+            throw new IllegalArgumentException("User already has additional information");
+        if(userRepository.findUserByNickname(nickname).isPresent())
+            throw new IllegalArgumentException("duplicate nickname");
+        user.updateNickname(nickname);
         //another info...
     }
 
