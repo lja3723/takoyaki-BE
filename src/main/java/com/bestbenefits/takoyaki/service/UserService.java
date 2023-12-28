@@ -5,7 +5,6 @@ import com.bestbenefits.takoyaki.DTO.client.request.UserNicknameUpdateReqDTO;
 import com.bestbenefits.takoyaki.DTO.client.response.UserInfoResDTO;
 import com.bestbenefits.takoyaki.DTO.layer.request.OAuthSignUpReqDTO;
 import com.bestbenefits.takoyaki.DTO.layer.response.OAuthAuthResDTO;
-import com.bestbenefits.takoyaki.DTO.client.request.UserDuplicateNicknameReqDTO;
 import com.bestbenefits.takoyaki.config.properties.oauth.OAuthSocialType;
 import com.bestbenefits.takoyaki.entity.User;
 import com.bestbenefits.takoyaki.repository.UserRepository;
@@ -19,8 +18,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public boolean checkDuplicateNickname(UserDuplicateNicknameReqDTO userDuplicateNicknameReqDTO){
-        return userRepository.findUserByNickname(userDuplicateNicknameReqDTO.getNickname()).isPresent();
+    public boolean checkDuplicateNickname(String nickname){
+        return userRepository.findUserByNickname(nickname).isPresent();
     }
 
     @Transactional(readOnly = true)
@@ -50,7 +49,8 @@ public class UserService {
                 () -> new IllegalArgumentException("User not found"));
         if (user.getNickname() != null)
             throw new IllegalArgumentException("User already has additional information");
-        if(userRepository.findUserByNickname(nickname).isPresent())
+//        if(userRepository.findUserByNickname(nickname).isPresent())
+        if(checkDuplicateNickname(nickname))
             throw new IllegalArgumentException("duplicate nickname");
         user.updateNickname(nickname);
         //another info...

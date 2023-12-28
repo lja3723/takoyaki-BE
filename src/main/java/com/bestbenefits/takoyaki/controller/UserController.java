@@ -4,7 +4,6 @@ import com.bestbenefits.takoyaki.DTO.client.request.UserAdditionalInfoReqDTO;
 import com.bestbenefits.takoyaki.DTO.client.request.UserNicknameUpdateReqDTO;
 import com.bestbenefits.takoyaki.DTO.layer.request.OAuthSignUpReqDTO;
 import com.bestbenefits.takoyaki.DTO.layer.response.OAuthAuthResDTO;
-import com.bestbenefits.takoyaki.DTO.client.request.UserDuplicateNicknameReqDTO;
 import com.bestbenefits.takoyaki.DTO.server.response.TokensResDTO;
 import com.bestbenefits.takoyaki.DTO.server.response.SocialUserInfoResDTO;
 import com.bestbenefits.takoyaki.config.annotation.Session;
@@ -54,10 +53,10 @@ public class UserController {
     }
 
     @GetMapping("/duplicate-nickname")
-    public ApiResponse<?> checkDuplicateNickname(@RequestBody @Valid UserDuplicateNicknameReqDTO userDuplicateNicknameReqDTO){
+    public ApiResponse<?> checkDuplicateNickname(@RequestParam String nickname){
 
         Map<String, Boolean> data = new HashMap<>();
-        data.put("duplicate-nickname", userService.checkDuplicateNickname(userDuplicateNicknameReqDTO));
+        data.put("duplicate-nickname", userService.checkDuplicateNickname(nickname));
 
         return ApiResponseCreator.success(data);
     }
