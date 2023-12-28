@@ -23,7 +23,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public OAuthAuthResDTO loginByOAuth(String email, int socialType){
+    public OAuthAuthResDTO loginByOAuth(String email, OAuthSocialType socialType){
         User user = userRepository.findUserByEmailAndSocial(email, socialType).orElse(null);
         if (user != null)
             return OAuthAuthResDTO.builder()
@@ -72,7 +72,7 @@ public class UserService {
                 () -> new IllegalArgumentException("User not found"));
         return UserInfoResDTO.builder()
                 .nickname(user.getNickname())
-                .social(OAuthSocialType.fromValue(user.getSocial()).name().toLowerCase())
+                .social(user.getSocial())
                 .email(user.getEmail())
                 .build();
     }

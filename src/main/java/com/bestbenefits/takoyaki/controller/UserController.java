@@ -72,19 +72,17 @@ public class UserController {
         //request user's info to resource server by access token
         SocialUserInfoResDTO socialUserInfoResDTO = oAuthSocialWebClient.requestUserInfo(tokensResDTO.getAccessToken());
         //check whether this user exists in DataBase by using email & social type
-        OAuthAuthResDTO oAuthAuthResDTO = userService.loginByOAuth(socialUserInfoResDTO.getEmail(), oAuthSocialType.ordinal());
-
+        OAuthAuthResDTO oAuthAuthResDTO = userService.loginByOAuth(socialUserInfoResDTO.getEmail(), oAuthSocialType);
         if (oAuthAuthResDTO != null) { //등록된 유저고,
             if(!oAuthAuthResDTO.isInfoNeeded()) //추가 정보 있으면 로그인 완료
                 session.setAttribute(SessionConst.AUTHENTICATION, true);
         }else //등록되지 않은 유저면 유저 등록
             oAuthAuthResDTO = userService.signUpByOAuth(OAuthSignUpReqDTO.builder()
                                           .socialUserInfoResDTO(socialUserInfoResDTO)
-                                           .social(oAuthSocialType.getIndex())
+                                           .social(oAuthSocialType)
                                             .build());
 
         session.setAttribute(SessionConst.ID, oAuthAuthResDTO.getId());
-
         Map<String, Boolean> data = new HashMap<>();
         data.put("is_info_needed", oAuthAuthResDTO.isInfoNeeded());
 

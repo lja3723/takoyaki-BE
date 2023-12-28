@@ -1,5 +1,6 @@
 package com.bestbenefits.takoyaki.entity;
 
+import com.bestbenefits.takoyaki.config.properties.oauth.OAuthSocialType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,14 +25,15 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private int social;
+    @Enumerated(value = EnumType.STRING)
+    private OAuthSocialType social;
 
     @Column(name = "created_at")
     @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     @Builder
-    public User(String email, int social){
+    public User(String email, OAuthSocialType social){
         this.email = email;
         this.social = social;
         this.createdAt = LocalDateTime.now();
