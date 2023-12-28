@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -61,9 +63,11 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("User not found"));
 
-        String newNickname = userNicknameUpdateReqDTO.getNickname();
+        if (user.getNicknameUpdatedAt().isEqual(LocalDate.now()))
+            throw new IllegalArgumentException("닉네임은 하루에 한 번만 바꿀 수 있습니다.");
 
-        user.updateNickname(newNickname);
+        user.updateNickname(userNicknameUpdateReqDTO.getNickname());
+        user.updateNicknameUpdatedAt();
     }
 
     @Transactional(readOnly = true)
