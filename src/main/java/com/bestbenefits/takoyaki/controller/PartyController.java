@@ -5,8 +5,10 @@ import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponseCreator;
 import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
+import com.bestbenefits.takoyaki.config.properties.party.ContactMethod;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,12 +17,12 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/party")
 public class PartyController {
 
-    @PostMapping
-    public ApiResponse<?> createParty(@RequestBody @Valid PartyCreationReqDTO partyCreationReqDTO){
+    @PostMapping("/party")
+    public ApiResponse<?> createParty(@RequestBody @Valid PartyCreationReqDTO partyCreationReqDTO, BindingResult bindingResult) {
         System.out.println(partyCreationReqDTO.toString());
+        System.out.println(bindingResult.toString());
         //TODO: 카테고리, 활동지역, 연락수단 존재하는건지 확인
 
         //TODO: 예정 마감 일시가 작성 일시 이후인지 확인
@@ -42,10 +44,18 @@ public class PartyController {
         return ApiResponseCreator.success(data);
     }
 
-    @GetMapping("category")
+    @GetMapping("/category")
     public ApiResponse<?> getCategory() {
         Map<String, Object> data = new HashMap<>();
         data.put("category", Category.values());
         return ApiResponseCreator.success(data);
     }
+
+    @GetMapping("contact-method")
+    public ApiResponse<?> getContactMethod() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("contact-method", ContactMethod.values());
+        return ApiResponseCreator.success(data);
+    }
+
 }
