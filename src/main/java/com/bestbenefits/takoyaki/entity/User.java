@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 16, unique = true)
+    @Column(length = 16, unique = true) // nullable = false
     private String nickname;
 
     @Column(length = 100, nullable = false)
@@ -37,6 +37,7 @@ public class User {
 
     @Builder
     public User(String email, OAuthSocialType social){
+//        this.nickname = ;
         this.email = email;
         this.social = social;
         this.createdAt = LocalDateTime.now();
