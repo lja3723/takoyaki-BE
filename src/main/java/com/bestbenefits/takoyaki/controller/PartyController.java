@@ -21,16 +21,15 @@ public class PartyController {
     @PostMapping
     public ApiResponse<?> createParty(@RequestBody @Valid PartyCreationReqDTO partyCreationReqDTO){
         System.out.println(partyCreationReqDTO.toString());
-        //카테고리, 활동지역, 연락수단 존재하는건지 확인
+        //TODO: 카테고리, 활동지역, 연락수단 존재하는건지 확인
 
-        //예정 마감 일시가 작성 일시 이후인지 확인
+        //TODO: 예정 마감 일시가 작성 일시 이후인지 확인
 
-        //활동 기간 1이상 정수인지
+        //TODO: 활동 기간 1이상 정수인지
 
-        //모집명 1이상 정수인지
+        //TODO: 모집명 1이상 정수인지
 
-        //제목 100자인지
-
+        //TODO: 제목 100자인지
 
 
         return ApiResponseCreator.success("1");
@@ -46,7 +45,7 @@ public class PartyController {
     @GetMapping("category")
     public ApiResponse<?> getCategory() {
         Map<String, Object> data = new HashMap<>();
-        data.put("categories", Category.values());
+        data.put("category", Category.values());
         return ApiResponseCreator.success(data);
     }
 }
