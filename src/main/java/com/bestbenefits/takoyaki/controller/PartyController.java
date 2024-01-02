@@ -3,12 +3,14 @@ package com.bestbenefits.takoyaki.controller;
 import com.bestbenefits.takoyaki.DTO.client.request.PartyCreationReqDTO;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponseCreator;
+import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +33,12 @@ public class PartyController {
 
 
         return ApiResponseCreator.success("1");
+    }
+
+    @GetMapping("/activity-location")
+    public ApiResponse<?> getActivityLocation() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("activity-location", ActivityLocation.values());
+        return ApiResponseCreator.success(data);
     }
 }
