@@ -30,6 +30,7 @@ public class PartyController {
     @PostMapping("/party")
     public ApiResponse<?> createParty(@Session(attribute = SessionConst.ID) Long id, @RequestBody @Valid PartyCreationReqDTO dto) {
         Long partyId = partyService.createParty(id, dto);
+        System.out.println(partyId);
         Map<String, Long> data = new HashMap<>();
         data.put("id", partyId);
         return ApiResponseCreator.success(data);
