@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ActivityLocation {
-    온라인, 서울, 경기도, 충청도, 전라도, 강원도, 경상도, 제주도;
+    전국, 온라인, 수도권, 강원, 충청, 전라, 경상, 제주;
 
     public static ActivityLocation fromValue(String activityLocationName) {
         for (ActivityLocation activityLocation : ActivityLocation.values()) {

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum DurationUnit {
-    일, 주, 달, 년;
+    일, 주, 개월, 년;
 
     public static DurationUnit fromValue(String durationUnitName) {
         for (DurationUnit durationUnit : DurationUnit.values()) {

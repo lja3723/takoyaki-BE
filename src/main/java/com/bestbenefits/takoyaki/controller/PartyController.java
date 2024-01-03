@@ -46,6 +46,7 @@ public class PartyController {
     @GetMapping("/party/category")
     public ApiResponse<?> getCategory() {
         Map<String, Object> data = new HashMap<>();
+        //TODO: values가 아니라 내부에 PascalName을 반환하도록 수정 필요
         data.put("category", Category.values());
         return ApiResponseCreator.success(data);
     }
@@ -53,6 +54,7 @@ public class PartyController {
     @GetMapping("/party/contact-method")
     public ApiResponse<?> getContactMethod() {
         Map<String, Object> data = new HashMap<>();
+        //TODO: values가 아니라 내부에 PascalName을 반환하도록 수정 필요
         data.put("contact-method", ContactMethod.values());
         return ApiResponseCreator.success(data);
     }
