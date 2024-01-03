@@ -4,10 +4,7 @@ import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
 import com.bestbenefits.takoyaki.config.properties.party.ContactMethod;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -86,5 +83,9 @@ public class Party {
         this.modifiedAt = LocalDateTime.now();
         this.viewCount = 0L;
         this.deletedAt = null;
+    }
+
+    public void updateDeleteAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
