@@ -81,5 +81,10 @@ public class Party {
         this.plannedClosingDate = plannedClosingDate;
         this.activityDuration = activityDuration;
         this.contact = contact;
+        this.closedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+        this.viewCount = 0L;
+        this.deletedAt = null;
     }
 }
