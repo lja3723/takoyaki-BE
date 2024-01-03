@@ -2,6 +2,7 @@ package com.bestbenefits.takoyaki.controller;
 
 import com.bestbenefits.takoyaki.DTO.client.request.PartyCreationReqDTO;
 import com.bestbenefits.takoyaki.config.annotation.Session;
+import com.bestbenefits.takoyaki.config.apiresponse.ApiMessage;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponseCreator;
 import com.bestbenefits.takoyaki.config.properties.SessionConst;
@@ -56,4 +57,9 @@ public class PartyController {
         return ApiResponseCreator.success(data);
     }
 
+    @DeleteMapping("/parties/{partyId}")
+    public ApiResponse<?> deleteParty(@Session(attribute = SessionConst.ID) Long id, @PathVariable Long partyId) {
+        partyService.deleteParty(id, partyId);
+        return ApiResponseCreator.success(new ApiMessage(String.format("파티 id: %d번이 삭제되었습니다.", partyId)));
+    }
 }

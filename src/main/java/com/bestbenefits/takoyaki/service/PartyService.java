@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static com.bestbenefits.takoyaki.config.properties.party.DurationUnit.*;
 
 @Service
@@ -56,5 +59,22 @@ public class PartyService {
         partyRepository.save(party);
 
         return party.getId();
+    }
+
+    @Transactional
+    public void deleteParty(Long userId, Long partyId) {
+        Party p = partyRepository.findById(partyId).orElseThrow(
+                () -> new IllegalArgumentException("Party ID가 잘못되었습니다."));
+
+        if (!p.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException(String.format("해당 Party가 유저 ID: %d에 의해 생성되지 않았습니다.", userId));
+        }
+
+        if (p.getDeletedAt() != null) {
+            throw new IllegalArgumentException("이미 삭제된 Party입니다.");
+        }
+
+        p.updateDeleteAt(LocalDateTime.now());
+        partyRepository.save(p);
     }
 }
