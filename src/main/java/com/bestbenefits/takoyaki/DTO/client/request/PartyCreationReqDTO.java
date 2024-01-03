@@ -1,6 +1,6 @@
 package com.bestbenefits.takoyaki.DTO.client.request;
 
-import com.bestbenefits.takoyaki.config.annotation.EnumValid;
+import com.bestbenefits.takoyaki.config.annotation.EnumValue;
 import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
 import com.bestbenefits.takoyaki.config.properties.party.ContactMethod;
@@ -32,14 +32,14 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PartyCreationReqDTO {
     //카테고리, 활동지역, 연락수단 존재하는건지 확인
-    @EnumValid(enumClass = Category.class)
-    private Category category; //enum
+    @EnumValue(enumClass = Category.class)
+    private String category; //enum
 
-    @EnumValid(enumClass = ActivityLocation.class)
-    private ActivityLocation activityLocation; //enum
+    @EnumValue(enumClass = ActivityLocation.class)
+    private String activityLocation; //enum
 
-    @EnumValid(enumClass = ContactMethod.class)
-    private ContactMethod contactMethod; //enum
+    @EnumValue(enumClass = ContactMethod.class)
+    private String contactMethod; //enum
 
     //제목 100자인지 확인
     @NotBlank
@@ -60,8 +60,8 @@ public class PartyCreationReqDTO {
     private Integer activityDuration;
 
     //활동 기간 단위 검증
-    @EnumValid(enumClass = DurationUnit.class)
-    private DurationUnit activityDurationUnit;
+    @EnumValue(enumClass = DurationUnit.class)
+    private String activityDurationUnit;
 
     @Future(message = "마감 예정 일시는 미래여야 합니다.")
     private LocalDate plannedClosingDate;

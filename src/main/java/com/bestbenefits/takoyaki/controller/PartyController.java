@@ -28,28 +28,28 @@ public class PartyController {
     private final UserService userService;
 
     @PostMapping("/party")
-    public ApiResponse<?> createParty(/*@Session(attribute = SessionConst.ID) Long userId, */@RequestBody @Valid PartyCreationReqDTO dto) {
-        Long partyId = partyService.createParty(/*userId*/0L, dto);
+    public ApiResponse<?> createParty(@Session(attribute = SessionConst.ID) Long id, @RequestBody @Valid PartyCreationReqDTO dto) {
+        Long partyId = partyService.createParty(id, dto);
         Map<String, Long> data = new HashMap<>();
         data.put("id", partyId);
         return ApiResponseCreator.success(data);
     }
 
-    @GetMapping("/activity-location")
+    @GetMapping("/party/activity-location")
     public ApiResponse<?> getActivityLocation() {
         Map<String, Object> data = new HashMap<>();
         data.put("activity-location", ActivityLocation.values());
         return ApiResponseCreator.success(data);
     }
 
-    @GetMapping("/category")
+    @GetMapping("/party/category")
     public ApiResponse<?> getCategory() {
         Map<String, Object> data = new HashMap<>();
         data.put("category", Category.values());
         return ApiResponseCreator.success(data);
     }
 
-    @GetMapping("contact-method")
+    @GetMapping("/party/contact-method")
     public ApiResponse<?> getContactMethod() {
         Map<String, Object> data = new HashMap<>();
         data.put("contact-method", ContactMethod.values());

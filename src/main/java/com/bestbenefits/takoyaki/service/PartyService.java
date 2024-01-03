@@ -26,7 +26,7 @@ public class PartyService {
         if (user == null) return 0L; //UserId가 잘못된 경우 (여기에 써도 되나)
 
         int activityDuration = dto.getActivityDuration();
-        switch(dto.getActivityDurationUnit()) {
+        switch(DurationUnit.valueOf(dto.getActivityDurationUnit())) {
             case 일:
                 break;
             case 주:
@@ -41,9 +41,9 @@ public class PartyService {
         }
 
         Party party = Party.builder()
-                .category(dto.getCategory())
-                .activityLocation(dto.getActivityLocation())
-                .contactMethod(dto.getContactMethod())
+                .category(Category.valueOf(dto.getCategory()))
+                .activityLocation(ActivityLocation.valueOf(dto.getActivityLocation()))
+                .contactMethod(ContactMethod.valueOf(dto.getContactMethod()))
                 .title(dto.getTitle())
                 .body(dto.getBody())
                 .activityDuration(activityDuration)
