@@ -92,7 +92,7 @@ public class UserController {
     @PostMapping("/oauth/login/additional-info")
     public ApiResponse<?> signup(HttpSession session,
                                  @Session(attribute = SessionConst.ID) Long id,
-                                 @RequestBody @Valid UserAdditionalInfoReqDTO userAdditionalInfoReqDTO){
+                                 @RequestBody @Valid UserAdditionalInfoReqDTO userAdditionalInfoReqDTO) {
         userService.insertAdditionalInfo(id, userAdditionalInfoReqDTO);
         session.setAttribute(SessionConst.AUTHENTICATION, true);
         return ApiResponseCreator.success(new ApiMessage("추가 정보 입력이 완료되었습니다."), HttpStatus.CREATED.value());
