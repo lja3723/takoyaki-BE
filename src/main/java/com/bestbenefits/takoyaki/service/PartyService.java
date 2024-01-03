@@ -53,7 +53,6 @@ public class PartyService {
                 .user(user)
                 .build();
 
-        System.out.println(party.toString());
         partyRepository.save(party);
 
         return party.getId();
