@@ -4,7 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ContactMethod {
-    카카오톡, 문자, 인스타그램;
+    KAKAO_OPENCHAT( "카카오톡 오픈채팅", 0),
+    EMAIL("이메일", 1),
+    CELLPHONE_NUM("전화번호", 2);
+
+    private final String pascalName;
+    private final int index;
+    ContactMethod(String pascalName, int index){
+        this.pascalName = pascalName;
+        this.index = index;
+    }
 
     public static ContactMethod fromValue(String contactMethodName) {
         for (ContactMethod contactMethod : ContactMethod.values()) {
