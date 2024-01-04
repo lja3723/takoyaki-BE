@@ -15,6 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthenticationCheckInterceptor())
                 .addPathPatterns("/user/**")
+//                .addPathPatterns("/parties/**")
+//                .addPathPatterns("/party/**")
                 .excludePathPatterns(
                         "/js/**", "/oauth_example", "/oauth", "/favicon.ico", //실험용이니 나중에 삭제하기
                         "/user/login-check",
