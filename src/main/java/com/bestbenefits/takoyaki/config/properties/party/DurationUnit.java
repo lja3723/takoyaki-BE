@@ -13,7 +13,4 @@ public enum DurationUnit {
         }
         throw new IllegalArgumentException("Invalid duration unit name.");
     }
-    public static List<DurationUnit> toList(){
-        return Arrays.stream(DurationUnit.values()).toList();
-    }
 }

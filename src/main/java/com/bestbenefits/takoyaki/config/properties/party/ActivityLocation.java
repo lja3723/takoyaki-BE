@@ -15,7 +15,4 @@ public enum ActivityLocation {
         }
         throw new IllegalArgumentException("Invalid activity location name.");
     }
-    public static List<ActivityLocation> toList(){
-        return Arrays.stream(ActivityLocation.values()).toList();
-    }
 }
