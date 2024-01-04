@@ -85,6 +85,28 @@ public class Party {
         this.deletedAt = null;
     }
 
+    @Override
+    public String toString() {
+        return "Party{" +
+                "id=" + id +
+                ", user=" + user +
+                ", category=" + category +
+                ", activityLocation=" + activityLocation +
+                ", contactMethod=" + contactMethod +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", recruitNumber=" + recruitNumber +
+                ", plannedClosingDate=" + plannedClosingDate +
+                ", activityDuration=" + activityDuration +
+                ", contact='" + contact + '\'' +
+                ", viewCount=" + viewCount +
+                ", deletedAt=" + deletedAt +
+                ", closedAt=" + closedAt +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                '}';
+    }
+
     public void updateDeleteAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }

@@ -29,7 +29,7 @@ public class PartyService {
     public PartyCreationResDTO createParty(Long id, PartyCreationReqDTO partyCreationReqDTO) {
         User user = userRepository.findUserById(id).orElseThrow(
                 () -> new IllegalArgumentException("유저가 존재하지 않습니다."));
-
+        System.out.println("partyCreationReqDTO.toEntity(user) = " + partyCreationReqDTO.toEntity(user));
         Party party = partyRepository.save(partyCreationReqDTO.toEntity(user));
 
         return PartyCreationResDTO.builder()
@@ -42,13 +42,11 @@ public class PartyService {
         Party p = partyRepository.findById(partyId).orElseThrow(
                 () -> new IllegalArgumentException("Party ID가 잘못되었습니다."));
 
-        if (!p.getUser().getId().equals(id)) {
+        if (!p.getUser().getId().equals(id))
             throw new IllegalArgumentException(String.format("해당 Party가 유저 ID: %d에 의해 생성되지 않았습니다.", id));
-        }
 
-        if (p.getDeletedAt() != null) {
+        if (p.getDeletedAt() != null)
             throw new IllegalArgumentException("이미 삭제된 Party입니다.");
-        }
 
         p.updateDeleteAt(LocalDateTime.now());
     }
