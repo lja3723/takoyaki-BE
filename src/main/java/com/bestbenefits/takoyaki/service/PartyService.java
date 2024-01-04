@@ -35,7 +35,7 @@ public class PartyService {
             case 주:
                 activityDuration *= 7;
                 break;
-            case 달:
+            case 개월:
                 activityDuration *= 30;
                 break;
             case 년:

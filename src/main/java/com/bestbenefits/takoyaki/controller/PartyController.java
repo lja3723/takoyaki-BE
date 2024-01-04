@@ -9,6 +9,7 @@ import com.bestbenefits.takoyaki.config.properties.SessionConst;
 import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
 import com.bestbenefits.takoyaki.config.properties.party.ContactMethod;
+import com.bestbenefits.takoyaki.config.properties.party.DurationUnit;
 import com.bestbenefits.takoyaki.service.PartyService;
 import com.bestbenefits.takoyaki.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -56,6 +57,13 @@ public class PartyController {
         Map<String, Object> data = new HashMap<>();
         //TODO: values가 아니라 내부에 PascalName을 반환하도록 수정 필요
         data.put("contact-method", ContactMethod.values());
+        return ApiResponseCreator.success(data);
+    }
+
+    @GetMapping("/party/activity-duration-unit")
+    public ApiResponse<?> getActivityDurationUnit() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("activity-duration-unit", DurationUnit.values());
         return ApiResponseCreator.success(data);
     }
 
