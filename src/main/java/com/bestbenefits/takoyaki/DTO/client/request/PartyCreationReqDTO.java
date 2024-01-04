@@ -73,7 +73,7 @@ public class PartyCreationReqDTO {
     @NotBlank
     private String contact;
 
-    public Party toEntity(User user, int activityDuration){
+    public Party toEntity(User user){
         return Party.builder()
                 .category(Category.valueOf(category))
                 .activityLocation(ActivityLocation.valueOf(activityLocation))
@@ -83,7 +83,7 @@ public class PartyCreationReqDTO {
                 .recruitNumber(recruitNumber)
                 .contact(contact)
                 .plannedClosingDate(plannedClosingDate)
-                .activityDuration(activityDuration)
+                .activityDuration(activityDuration * DurationUnit.fromValue(activityDurationUnit).getDay())
                 .user(user)
                 .build();
     }

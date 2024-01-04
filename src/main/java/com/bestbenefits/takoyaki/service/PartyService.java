@@ -29,12 +29,7 @@ public class PartyService {
         User user = userRepository.findUserById(id).orElseThrow(
                 () -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
-        int activityDuration = partyCreationReqDTO.getActivityDuration() *
-        DurationUnit.fromValue(partyCreationReqDTO.getActivityDurationUnit()).getDay();
-
-        Party party = partyCreationReqDTO.toEntity(user, activityDuration); //
-
-        partyRepository.save(party);
+        Party party = partyRepository.save(partyCreationReqDTO.toEntity(user));
 
         return party.getId();
     }
