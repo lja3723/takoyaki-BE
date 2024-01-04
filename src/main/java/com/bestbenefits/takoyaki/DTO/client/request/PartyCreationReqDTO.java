@@ -1,10 +1,13 @@
 package com.bestbenefits.takoyaki.DTO.client.request;
 
+import com.bestbenefits.takoyaki.config.annotation.EnumName;
 import com.bestbenefits.takoyaki.config.annotation.EnumValue;
 import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
 import com.bestbenefits.takoyaki.config.properties.party.ContactMethod;
 import com.bestbenefits.takoyaki.config.properties.party.DurationUnit;
+import com.bestbenefits.takoyaki.entity.Party;
+import com.bestbenefits.takoyaki.entity.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.*;
@@ -31,41 +34,57 @@ import java.time.LocalDate;
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PartyCreationReqDTO {
-    //카테고리, 활동지역, 연락수단 존재하는건지 확인
-    @EnumValue(enumClass = Category.class)
-    private String category; //enum
+    @EnumName(enumClass = Category.class)
+    private String category;
 
     @EnumValue(enumClass = ActivityLocation.class)
-    private String activityLocation; //enum
+    private String activityLocation;
 
-    @EnumValue(enumClass = ContactMethod.class)
-    private String contactMethod; //enum
+    @EnumName(enumClass = ContactMethod.class)
+    private String contactMethod;
 
-    //제목 100자인지 확인
+    @EnumValue(enumClass = DurationUnit.class)
+    private String activityDurationUnit;
+
+    //제목
     @NotBlank
     @Size(max = 100, message = "제목은 100자 이하여야 합니다.")
     private String title;
 
+    //본문
     @NotBlank
     private String body;
 
-    //모집 인원수 1이상 정수인지 확인
+    //모집 인원 수
     @NotNull
     @Positive(message = "모집 인원수는 1명 이상이어야 합니다.")
     private Integer recruitNumber;
 
-    //활동 기간 1이상 정수인지 확인
+    //활동 기간
     @NotNull
     @Positive(message = "활동 기간은 1 이상이어야 합니다.")
     private Integer activityDuration;
 
-    //활동 기간 단위 검증
-    @EnumValue(enumClass = DurationUnit.class)
-    private String activityDurationUnit;
-
+    //마감 예정 일시
     @Future(message = "마감 예정 일시는 미래여야 합니다.")
     private LocalDate plannedClosingDate;
 
+    //연락처
     @NotBlank
     private String contact;
+
+    public Party toEntity(User user, int activityDuration){
+        return Party.builder()
+                .category(Category.valueOf(category))
+                .activityLocation(ActivityLocation.valueOf(activityLocation))
+                .contactMethod(ContactMethod.valueOf(contactMethod))
+                .title(title)
+                .body(body)
+                .recruitNumber(recruitNumber)
+                .contact(contact)
+                .plannedClosingDate(plannedClosingDate)
+                .activityDuration(activityDuration)
+                .user(user)
+                .build();
+    }
 }
