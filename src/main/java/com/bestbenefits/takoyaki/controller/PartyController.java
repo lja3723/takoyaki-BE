@@ -1,6 +1,7 @@
 package com.bestbenefits.takoyaki.controller;
 
 import com.bestbenefits.takoyaki.DTO.client.request.PartyCreationReqDTO;
+import com.bestbenefits.takoyaki.DTO.client.response.PartyCreationResDTO;
 import com.bestbenefits.takoyaki.config.annotation.Session;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiMessage;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
@@ -31,10 +32,7 @@ public class PartyController {
 
     @PostMapping("/party")
     public ApiResponse<?> createParty(@Session(attribute = SessionConst.ID) Long id, @RequestBody @Valid PartyCreationReqDTO dto) {
-        Long partyId = partyService.createParty(id, dto);
-        Map<String, Long> data = new HashMap<>();
-        data.put("id", partyId);
-        return ApiResponseCreator.success(data);
+        return ApiResponseCreator.success(partyService.createParty(id, dto));
     }
 
     @GetMapping("/party/activity-location")

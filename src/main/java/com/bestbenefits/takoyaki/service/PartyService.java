@@ -1,6 +1,7 @@
 package com.bestbenefits.takoyaki.service;
 
 import com.bestbenefits.takoyaki.DTO.client.request.PartyCreationReqDTO;
+import com.bestbenefits.takoyaki.DTO.client.response.PartyCreationResDTO;
 import com.bestbenefits.takoyaki.config.apiresponse.ApiResponse;
 import com.bestbenefits.takoyaki.config.properties.party.ActivityLocation;
 import com.bestbenefits.takoyaki.config.properties.party.Category;
@@ -25,13 +26,15 @@ public class PartyService {
     private final PartyRepository partyRepository;
     private final UserRepository userRepository;
     @Transactional //
-    public Long createParty(Long id, PartyCreationReqDTO partyCreationReqDTO) {
+    public PartyCreationResDTO createParty(Long id, PartyCreationReqDTO partyCreationReqDTO) {
         User user = userRepository.findUserById(id).orElseThrow(
                 () -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         Party party = partyRepository.save(partyCreationReqDTO.toEntity(user));
 
-        return party.getId();
+        return PartyCreationResDTO.builder()
+                .partyId(party.getId())
+                .build();
     }
 
     @Transactional
